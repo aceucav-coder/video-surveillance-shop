@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { services, serviceCategories, getServicesByCategory } from '@/data/services';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import ConsultationModal from '@/components/services/ConsultationModal';
 
 interface Service {
@@ -23,6 +24,13 @@ interface Service {
   image: string;
   category: { slug: string; nameUk: string; nameRu: string };
 }
+
+// Service Icon Component
+const ServiceIcon = ({ icon }: { icon: string }) => (
+  <div className="w-12 h-12 bg-primary rounded-sm flex items-center justify-center mb-4">
+    <span className="text-2xl">{icon}</span>
+  </div>
+);
 
 export default function ServicesPage() {
   const { addToCart } = useCart();
@@ -58,39 +66,40 @@ export default function ServicesPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-background-dark">
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-gray-800 to-blue-900 text-white py-16 mt-4">
+      <section className="bg-gradient-to-r from-primary to-background-mid text-white py-12 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-            Наші послуги
+          <span className="tag mb-3">Послуги</span>
+          <h1 className="font-heading text-3xl md:text-5xl font-black mb-4 text-text-light">
+            Професійні послуги відеоспостереження
           </h1>
-          <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-            Професійні послуги з монтажу, налаштування та обслуговування систем відеоспостереження
+          <p className="text-xl mb-8 max-w-3xl mx-auto text-text-softer">
+            Проєктування, монтаж, налаштування та обслуговування систем відеоспостереження будь-якої складності
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/uk" className="btn-secondary text-blue-400 border-blue-400">
+            <Link href="/uk" className="btn-primary">
               На головну
             </Link>
-            <Link href="/catalog" className="btn-secondary text-blue-400 border-blue-400">
-              До каталогу
+            <Link href="/catalog" className="btn-outline text-text-light border-border hover:border-accent">
+              До каталогу →
             </Link>
           </div>
         </div>
       </section>
 
       {/* Service Categories Navigation */}
-      <section className="py-8 bg-white shadow-sm">
+      <section className="py-6 bg-background-mid border-t border-secondary/20 border-b border-primary/30">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-2">
             <button
               onClick={() => setActiveCategory('all')}
-              className={`px-6 py-3 rounded-xl font-medium transition-all ${
+              className={`px-5 py-2.5 rounded-sm font-medium transition-all ${
                 activeCategory === 'all'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-secondary text-white'
+                  : 'bg-transparent text-text-softer border border-border/30 hover:border-secondary/50'
               }`}
             >
               Усі послуги ({allServices.length})
@@ -99,10 +108,10 @@ export default function ServicesPage() {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.slug)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                className={`px-5 py-2.5 rounded-sm font-medium transition-all ${
                   activeCategory === category.slug
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-secondary text-white'
+                    : 'bg-transparent text-text-softer border border-border/30 hover:border-secondary/50'
                 }`}
               >
                 {category.nameUk}
@@ -113,15 +122,15 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-12">
+      <section className="py-12 bg-background-light">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {displayServices.map((service) => (
               <div
                 key={service.id}
-                className="card overflow-hidden"
+                className="service-card"
               >
-                <div className="relative aspect-video bg-gray-100">
+                <div className="relative aspect-video bg-gray-50 rounded-t-lg overflow-hidden mb-5">
                   <img
                     src={service.image}
                     alt={service.nameUk}
@@ -132,21 +141,21 @@ export default function ServicesPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <span className="text-3xl">{service.icon}</span>
+                    <ServiceIcon icon={service.icon} />
                   </div>
                   <div className="absolute top-4 right-4">
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-secondary text-white px-3 py-1.5 rounded-full text-sm font-medium">
                       від {service.basePrice} ₴/{service.unitLabel}
                     </span>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{service.nameUk}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">{service.descriptionUk}</p>
+                <div className="p-4">
+                  <h3 className="font-heading text-lg font-bold text-primary mb-2">{service.nameUk}</h3>
+                  <p className="text-text-muted mb-4 line-clamp-2">{service.descriptionUk}</p>
 
                   <button
                     onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-                    className="flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700 transition-colors mb-3"
+                    className="flex items-center gap-2 text-secondary font-medium hover:text-accent transition-colors mb-3"
                   >
                     <span>{expandedService === service.id ? 'Приховати' : 'Деталі'}</span>
                     <svg
@@ -160,12 +169,12 @@ export default function ServicesPage() {
                   </button>
 
                   {expandedService === service.id && (
-                    <div className="mt-3 pt-4 border-t border-gray-200">
-                      <h4 className="font-semibold text-gray-800 mb-3">Включено:</h4>
+                    <div className="mt-3 pt-4 border-t border-border/20">
+                      <h4 className="font-heading font-semibold text-primary mb-3">Включено:</h4>
                       <ul className="space-y-2">
                         {service.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-gray-600">
-                            <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <li key={i} className="flex items-center gap-2 text-text-muted">
+                            <svg className="w-4 h-4 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                             <span>{feature}</span>
@@ -173,18 +182,18 @@ export default function ServicesPage() {
                         ))}
                       </ul>
                       {service.priceNote && (
-                        <p className="text-sm text-gray-500 mt-3 italic">{service.priceNote}</p>
+                        <p className="text-sm text-text-muted mt-3 italic">{service.priceNote}</p>
                       )}
-                      <div className="mt-4 flex gap-3">
+                      <div className="mt-4 flex gap-2">
                         <button
                           onClick={() => handleAddServiceToCart(service)}
-                          className="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+                          className="flex-1 py-2 px-4 bg-secondary text-white rounded-sm text-sm font-medium hover:bg-secondary/90 transition-colors"
                         >
                           🛒 Додати до кошика
                         </button>
                         <button
                           onClick={() => openConsultationModal(service.nameUk)}
-                          className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                          className="flex-1 py-2 px-4 bg-accent text-primary rounded-sm text-sm font-medium hover:bg-accent-dark transition-colors"
                         >
                           💬 Консультація
                         </button>
@@ -193,16 +202,16 @@ export default function ServicesPage() {
                   )}
 
                   {expandedService !== service.id && (
-                    <div className="mt-4 flex gap-3">
+                    <div className="mt-4 flex gap-2">
                       <button
                         onClick={() => handleAddServiceToCart(service)}
-                        className="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+                        className="flex-1 py-2 px-4 bg-secondary text-white rounded-sm text-sm font-medium hover:bg-secondary/90 transition-colors"
                       >
                         🛒 Додати до кошика
                       </button>
                       <button
                         onClick={() => openConsultationModal(service.nameUk)}
-                        className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                        className="flex-1 py-2 px-4 bg-accent text-primary rounded-sm text-sm font-medium hover:bg-accent-dark transition-colors"
                       >
                         💬 Консультація
                       </button>
@@ -215,22 +224,16 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Consultation Modal */}
-      <ConsultationModal
-        isOpen={isConsultationModalOpen}
-        onClose={() => setIsConsultationModalOpen(false)}
-        serviceName={selectedServiceName}
-      />
-
       {/* Pricing Section */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-background-light">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
-            Вартість послуг
-          </h2>
-          <p className="text-center text-gray-500 mb-12">
-            Ціни вказані орієнтовно. Точну вартість розраховуємо індивідуально після огляду об'єкту.
-          </p>
+          <div className="section-header text-center">
+            <span className="tag">Тарифи</span>
+            <h2 className="section-h2 mx-auto max-w-xl">Вартість послуг</h2>
+            <p className="section-sub mx-auto max-w-xl mt-2">
+              Ціни вказані орієнтовно. Точну вартість розраховуємо індивідуально після огляду об'єкту.
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
@@ -238,7 +241,7 @@ export default function ServicesPage() {
                 title: 'Базовий',
                 price: 'від 1500 ₴',
                 description: 'Монтаж до 4 камер',
-                features: ['Do 4 камер', 'Прокладка кабелю', 'Налаштування', 'Гарантія 12 міс.'],
+                features: ['До 4 камер', 'Прокладка кабелю', 'Налаштування', 'Гарантія 12 міс.'],
                 popular: false
               },
               {
@@ -258,36 +261,36 @@ export default function ServicesPage() {
             ].map((plan, i) => (
               <div
                 key={i}
-                className={`bg-white rounded-2xl p-6 shadow-lg border-2 ${
+                className={`bg-white rounded-lg p-6 shadow-sm border-2 ${
                   plan.popular
-                    ? 'border-blue-500 ring-4 ring-blue-100'
-                    : 'border-gray-200'
+                    ? 'border-secondary ring-4 ring-secondary/10'
+                    : 'border-border hover:border-secondary/30'
                 }`}
               >
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold text-gray-800">{plan.title}</h3>
-                  <p className="text-gray-500 text-sm mt-1">{plan.description}</p>
+                  <h3 className="font-heading text-xl font-bold text-primary">{plan.title}</h3>
+                  <p className="text-text-muted text-sm mt-1">{plan.description}</p>
                 </div>
                 <div className="text-center mb-6">
-                  <span className="text-4xl font-bold text-blue-600">{plan.price.split(' ')[0]}</span>
-                  <span className="text-lg text-gray-500">{plan.price.split(' ')[1]}</span>
+                  <span className="font-heading text-4xl font-bold text-secondary">{plan.price.split(' ')[0]}</span>
+                  <span className="text-lg text-text-muted"> {plan.price.split(' ')[1]}</span>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, j) => (
                     <li key={j} className="flex items-center gap-2">
-                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span className="text-gray-600">{feature}</span>
+                      <span className="text-text-muted">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 <button
                   onClick={() => openConsultationModal(plan.title)}
-                  className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
+                  className={`w-full py-3 px-6 rounded-sm font-medium transition-colors ${
                     plan.popular
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-secondary text-white hover:bg-secondary/90'
+                      : 'bg-white text-primary border border-secondary hover:bg-secondary/10'
                   }`}
                 >
                   Обрати план
@@ -299,11 +302,12 @@ export default function ServicesPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Часті запитання
-          </h2>
+          <div className="section-header text-center">
+            <span className="tag">FAQ</span>
+            <h2 className="section-h2 mx-auto max-w-xl">Часті запитання</h2>
+          </div>
           <div className="max-w-4xl mx-auto space-y-4">
             {[
               {
@@ -324,8 +328,8 @@ export default function ServicesPage() {
               }
             ].map((faq, i) => (
               <div key={i} className="card p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+                <h3 className="font-heading text-lg font-semibold text-primary mb-2">{faq.question}</h3>
+                <p className="text-text-muted">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -333,37 +337,41 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Потрібна консультація?
-          </h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Залиште заявку і наш фахівець зв'яжеться з вами протягом 30 хвилин
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-            <button
-              onClick={() => openConsultationModal('Швидка консультація')}
-              className="btn-primary flex-1"
-            >
-              +38 (044) 123-45-67
-            </button>
-            <button
-              onClick={() => openConsultationModal('Зворотний дзвінок')}
-              className="btn-secondary text-blue-600 border-blue-400 flex-1"
-            >
-              Замовити дзвінок
-            </button>
+      <section className="py-16 bg-background-dark">
+        <div className="container mx-auto px-4">
+          <div className="bg-secondary rounded-lg p-8 md:p-14 text-center">
+            <h2 className="font-heading text-2xl md:text-3xl font-black text-white mb-3">
+              Потрібна консультація?
+            </h2>
+            <p className="text-text-light/85 text-sm md:text-base max-w-2xl mx-auto mb-8">
+              Залиште заявку і наш фахівець зв'яжеться з вами протягом 30 хвилин
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+              <button
+                onClick={() => openConsultationModal('Швидка консультація')}
+                className="btn-primary flex-1"
+              >
+                +38 (044) 123-45-67
+              </button>
+              <button
+                onClick={() => openConsultationModal('Зворотний дзвінок')}
+                className="btn-outline text-secondary border-border flex-1"
+              >
+                Замовити дзвінок
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Consultation Modal for CTA */}
+      {/* Consultation Modal */}
       <ConsultationModal
         isOpen={isConsultationModalOpen}
         onClose={() => setIsConsultationModalOpen(false)}
         serviceName={selectedServiceName}
       />
+
+      <Footer />
     </main>
   );
 }

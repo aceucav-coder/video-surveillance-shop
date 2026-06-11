@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'cta';
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -13,13 +13,14 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseStyles = 'rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseStyles = 'font-heading font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm';
 
   const variants = {
-    primary: 'bg-primary hover:bg-primary-dark text-white shadow-md hover:shadow-lg',
-    secondary: 'bg-white hover:bg-gray-50 text-gray-800 border border-gray-200',
-    outline: 'bg-transparent hover:bg-gray-50 text-gray-800 border border-gray-300',
-    ghost: 'bg-transparent hover:bg-gray-100 text-gray-800',
+    primary: 'bg-accent hover:bg-accent-dark text-primary shadow-md hover:shadow-lg active:scale-95',
+    secondary: 'bg-white hover:bg-gray-50 text-primary border border-gray-200',
+    outline: 'bg-transparent hover:bg-accent/10 text-accent border border-secondary hover:border-accent',
+    ghost: 'bg-transparent hover:bg-primary/10 text-text-softer',
+    cta: 'bg-white hover:bg-accent-light text-secondary shadow-lg',
   };
 
   const sizes = {

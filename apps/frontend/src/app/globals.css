@@ -4,10 +4,25 @@
 
 @layer base {
   :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #3b82f6;
-    --secondary: #7c3aed;
+    /* PaxVision Color Palette */
+    --color-primary: #0C2340;
+    --color-secondary: #1D9E75;
+    --color-accent: #5DCAA5;
+    --color-bg-light: #F4F7FA;
+    --color-bg-dark: #071828;
+    --color-bg-mid: #0F2E40;
+    --color-text: #1E2E3D;
+    --color-text-muted: #888780;
+    --color-text-light: #E1F5EE;
+    --color-text-softer: #9FE1CB;
+    --color-border: #D3D1C7;
+    
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
   }
   
   html {
@@ -15,31 +30,64 @@
   }
   
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--color-text);
+    background: var(--color-bg-dark);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 @layer components {
-  .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 shadow-md hover:shadow-lg;
+  /* Container */
+  .container {
+    @apply max-w-[1160px] mx-auto px-8 md:px-8 lg:px-8;
   }
-
+  
+  /* Tag */
+  .tag {
+    @apply inline-block font-heading text-xs font-semibold tracking-[2.5px] uppercase text-secondary;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    @apply inline-block font-heading text-sm font-bold text-primary bg-accent px-5 py-2.5 rounded-sm 
+           transition-colors duration-200 hover:bg-accent-dark active:scale-95;
+  }
+  
+  .btn-outline {
+    @apply inline-block font-heading text-sm font-semibold text-accent bg-transparent px-5 py-2.5 rounded-sm 
+           border-1.5 border-secondary transition-colors duration-200 
+           hover:border-accent hover:text-text-light;
+  }
+  
+  .btn-cta {
+    @apply inline-block font-heading text-base font-bold text-secondary bg-white px-8 py-3.5 rounded-sm 
+           whitespace-nowrap transition-colors duration-200 hover:bg-accent-light;
+  }
+  
   .btn-secondary {
     @apply bg-white hover:bg-gray-50 text-gray-800 px-6 py-3 rounded-lg font-medium border border-gray-200 transition-colors duration-200;
   }
-
+  
+  /* Cards */
   .card {
     @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100;
   }
-
+  
+  .service-card {
+    @apply bg-white rounded-lg px-6 py-7 border-0.5 border-border transition-colors duration-200 hover:border-secondary;
+  }
+  
   .section-title {
     @apply text-2xl md:text-3xl font-bold text-gray-900 mb-8;
   }
-
+  
   .badge-sale {
     @apply bg-red-600 text-white px-3 py-1 rounded-full text-xs font-medium;
   }
-
+  
   .badge-hit {
     @apply bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-medium;
   }
@@ -51,17 +99,69 @@
   .container-section {
     @apply container mx-auto px-4;
   }
+  
+  /* Stats */
+  .stat-number {
+    @apply font-heading text-4xl md:text-5xl font-black text-accent;
+  }
+  
+  .stat-label {
+    @apply font-body text-xs font-medium text-text-softer uppercase tracking-wider;
+  }
+  
+  /* Section Headers */
+  .section-header {
+    @apply mb-12;
+  }
+  
+  .section-h2 {
+    @apply font-heading text-3xl md:text-4xl font-black text-primary mb-2 -tracking-tight;
+  }
+  
+  .section-sub {
+    @apply text-base text-text-muted;
+  }
+  
+  /* Hero specific */
+  .hero-h1 {
+    @apply font-heading text-4xl md:text-6xl font-black text-text-light mb-2.5 -tracking-tight;
+  }
+  
+  .hero-h1 .accent {
+    @apply text-accent;
+  }
+  
+  .hero-sub {
+    @apply text-base text-text-softer mb-8 max-w-xl;
+  }
+  
+  /* Process steps */
+  .step-num {
+    @apply font-heading text-xs font-bold text-secondary tracking-[2px] uppercase mb-3;
+  }
+  
+  .step-line {
+    @apply w-10 h-0.5 bg-secondary mb-4;
+  }
+  
+  .step-title {
+    @apply font-heading text-base font-bold text-text-light mb-2;
+  }
+  
+  .step-text {
+    @apply text-sm text-text-softer;
+  }
 }
 
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
   }
-
+  
   .price {
     @apply text-xl font-bold text-primary;
   }
-
+  
   .old-price {
     @apply text-lg text-gray-500 line-through ml-2;
   }
@@ -72,5 +172,29 @@
   
   .partner-card {
     @apply card p-6 text-center hover:scale-105 transition-transform;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }

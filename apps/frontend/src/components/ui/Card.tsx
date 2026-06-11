@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'bordered' | 'shadow';
+  variant?: 'default' | 'bordered' | 'shadow' | 'service';
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -13,14 +13,15 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const variants = {
     default: 'bg-white',
-    bordered: 'bg-white border border-gray-200',
+    bordered: 'bg-white border border-border',
     shadow: 'bg-white shadow-md',
+    service: 'bg-white border-0.5 border-border hover:border-secondary transition-colors duration-200',
   };
 
   return (
     <div
       className={cn(
-        'rounded-xl overflow-hidden',
+        'rounded-lg',
         variants[variant],
         className
       )}

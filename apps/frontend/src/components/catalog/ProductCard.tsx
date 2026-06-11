@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/Badge';
 import { Price } from '@/components/ui/Price';
-import { ShoppingCart, Eye } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -23,19 +22,21 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  locale?: 'uk' | 'ru';
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, locale = 'uk' }) => {
   const isOutOfStock = !product.isAvailable || product.quantity <= 0;
   const imageSrc = product.images[0] || '/images/placeholder-product.jpg';
+  const name = locale === 'uk' ? product.nameUk : product.nameRu;
 
   return (
-    <div className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-      <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative aspect-square overflow-hidden bg-gray-100">
+    <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-border/20">
+      <Link href={`/catalog/${product.category.slug}/${product.slug}`} className="block">
+        <div className="relative aspect-square overflow-hidden bg-gray-50">
           <Image
             src={imageSrc}
-            alt={product.nameUk}
+            alt={name}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -50,9 +51,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
         <div className="p-4">
-          <h3 className="font-medium text-gray-900 line-clamp-1 mb-2">{product.nameUk}</h3>
+          <h3 className="font-heading font-semibold text-primary line-clamp-1 mb-2">{name}</h3>
           {product.brand && (
-            <p className="text-sm text-gray-500 mb-2">{product.brand.name}</p>
+            <p className="text-sm text-text-muted mb-2">{product.brand.name}</p>
           )}
           <Price
             price={product.price}
@@ -60,12 +61,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className="mb-3"
           />
           {!isOutOfStock && (
-            <div className="flex items-center justify-between">
-              <button className="text-sm text-primary hover:text-primary-dark transition-colors">
+            <div className="flex items-center justify-between pt-2 border-t border-border/20">
+              <button className="text-sm text-secondary hover:text-accent transition-colors font-medium">
                 В кошик
               </button>
-              <button className="text-sm text-gray-500 hover:text-primary transition-colors flex items-center gap-1">
-                <Eye size={16} /> Детальніше
+              <button className="text-sm text-text-muted hover:text-secondary transition-colors font-medium">
+                Детальніше →
               </button>
             </div>
           )}

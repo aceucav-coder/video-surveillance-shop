@@ -23,11 +23,11 @@ export const Price: React.FC<PriceProps> = ({
 
   return (
     <div className={cn('flex items-center gap-2', className)}>
-      <span className="price text-xl font-bold">
+      <span className="font-heading text-xl font-bold text-secondary">
         {formatPrice(price)} {showCurrency && '₴'}
       </span>
       {oldPrice && oldPrice > price && (
-        <span className="old-price text-lg text-gray-500 line-through">
+        <span className="font-body text-lg text-text-muted line-through">
           {formatPrice(oldPrice)} ₴
         </span>
       )}

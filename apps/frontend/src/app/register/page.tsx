@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function RegisterPage() {
   const { register, isAuthenticated, isLoading, error } = useAuth();
@@ -56,41 +57,46 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-background-dark">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-12 mt-4">
+      <section className="bg-gradient-to-r from-primary to-background-mid text-white py-10">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-2">Реєстрація</h1>
-          <p className="opacity-80">Створіть обліковий запис для отримання доступу до особистого кабінету</p>
+          <span className="tag mb-3">Реєстрація</span>
+          <h1 className="font-heading text-3xl md:text-4xl font-black mb-2 text-text-light">
+            Створіть обліковий запис
+          </h1>
+          <p className="text-text-softer">
+            Для отримання доступу до особистого кабінету та збереження замовлень
+          </p>
         </div>
       </section>
 
       {/* Registration Form */}
-      <section className="py-12">
+      <section className="py-12 bg-background-light">
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
-            <div className="card p-8 shadow-xl">
-              <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+            <div className="bg-white rounded-lg p-8 shadow-sm border border-border">
+              <h2 className="font-heading text-2xl font-bold text-center text-primary mb-6">
                 Створити обліковий запис
               </h2>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-sm mb-6 text-sm">
                   {error}
                 </div>
               )}
 
               {passwordError && (
-                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-sm mb-6 text-sm">
                   {passwordError}
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="name" className="block font-body text-sm font-medium text-primary mb-2">
                     ПІБ *
                   </label>
                   <input
@@ -100,12 +106,12 @@ export default function RegisterPage() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Ваше ім'я"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-border rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="email" className="block font-body text-sm font-medium text-primary mb-2">
                     Електронна пошта *
                   </label>
                   <input
@@ -115,12 +121,12 @@ export default function RegisterPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="email@example.com"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-border rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="phone" className="block font-body text-sm font-medium text-primary mb-2">
                     Телефон
                   </label>
                   <input
@@ -129,12 +135,12 @@ export default function RegisterPage() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+38 (044) 123-45-67"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-border rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="password" className="block font-body text-sm font-medium text-primary mb-2">
                     Пароль *
                   </label>
                   <div className="relative">
@@ -146,24 +152,24 @@ export default function RegisterPage() {
                       placeholder="Створіть пароль"
                       required
                       minLength={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                      className="w-full px-4 py-3 border border-border rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent pr-12"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
-                      <svg className="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-text-muted hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Пароль повинен містити щонайменше 6 символів</p>
+                  <p className="text-xs text-text-muted mt-1">Пароль повинен містити щонайменше 6 символів</p>
                 </div>
 
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="confirmPassword" className="block font-body text-sm font-medium text-primary mb-2">
                     Підтвердіть пароль *
                   </label>
                   <div className="relative">
@@ -174,14 +180,14 @@ export default function RegisterPage() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Підтвердіть пароль"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                      className="w-full px-4 py-3 border border-border rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent pr-12"
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
-                      <svg className="w-5 h-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-text-muted hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
@@ -189,20 +195,20 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center">
+                <div className="flex items-start">
                   <input
                     type="checkbox"
                     id="terms"
                     required
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 text-secondary border-border rounded focus:ring-accent mt-0.5"
                   />
-                  <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
+                  <label htmlFor="terms" className="ml-2 text-sm text-text-muted">
                     Я погоджуюсь з{' '}
-                    <Link href="/terms" className="text-blue-600 hover:text-blue-700">
+                    <Link href="/terms" className="text-secondary hover:text-accent">
                       Умовами користування
                     </Link>{' '}
                     та{' '}
-                    <Link href="/privacy" className="text-blue-600 hover:text-blue-700">
+                    <Link href="/privacy" className="text-secondary hover:text-accent">
                       Політикою конфіденційності
                     </Link>
                   </label>
@@ -211,10 +217,10 @@ export default function RegisterPage() {
                 <button
                   type="submit"
                   disabled={isLoading || !name || !email || !password || !confirmPassword}
-                  className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-colors ${
+                  className={`w-full py-4 px-6 rounded-sm font-heading font-bold text-lg transition-colors ${
                     isLoading || !name || !email || !password || !confirmPassword
-                      ? 'bg-blue-300 text-white cursor-not-allowed'
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'bg-border text-text-muted cursor-not-allowed'
+                      : 'bg-secondary text-white hover:bg-secondary/90'
                   }`}
                 >
                   {isLoading ? (
@@ -227,7 +233,7 @@ export default function RegisterPage() {
                   )}
                 </button>
 
-                <div className="text-center text-gray-500 text-sm">
+                <div className="text-center text-text-muted text-sm pt-2 border-t border-border/20">
                   Або зареєструватися через
                 </div>
 
@@ -235,24 +241,24 @@ export default function RegisterPage() {
                   <button
                     type="button"
                     disabled={isLoading}
-                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-3 px-4 border border-border rounded-sm text-primary hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
                   >
                     <span className="text-xl">G</span>
-                    <span>Google</span>
+                    <span className="font-medium">Google</span>
                   </button>
                   <button
                     type="button"
                     disabled={isLoading}
-                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-3 px-4 border border-border rounded-sm text-primary hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
                   >
                     <span className="text-xl text-blue-600">f</span>
-                    <span>Facebook</span>
+                    <span className="font-medium">Facebook</span>
                   </button>
                 </div>
 
-                <div className="text-center text-gray-500 text-sm mt-6">
+                <div className="text-center text-text-muted text-sm mt-6 pt-4 border-t border-border/20">
                   Вже маєте обліковий запис?{' '}
-                  <Link href="/login" className="text-blue-600 font-medium hover:text-blue-700">
+                  <Link href="/login" className="text-secondary font-medium hover:text-accent">
                     Увійти
                   </Link>
                 </div>
@@ -263,9 +269,9 @@ export default function RegisterPage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-12 bg-gray-100">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
+          <h2 className="font-heading text-2xl font-bold text-center mb-8 text-primary">
             Переваги реєстрації
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -287,14 +293,16 @@ export default function RegisterPage() {
               }
             ].map((item, i) => (
               <div key={i} className="card p-6 text-center">
-                <span className="text-4xl mb-3 block">{item.icon}</span>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
+                <span className="text-4xl mb-3 block text-secondary">{item.icon}</span>
+                <h3 className="font-heading text-xl font-bold mb-2 text-primary">{item.title}</h3>
+                <p className="text-text-muted">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }
