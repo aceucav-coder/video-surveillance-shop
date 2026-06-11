@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+.pnp/
+.yarn/
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Environment
+.env*
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# Docker
+docker-compose.override.yml

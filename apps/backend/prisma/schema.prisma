@@ -1,0 +1,273 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  password         String?
+  firstName        String?
+  lastName         String?
+  phone            String?
+  isVerified       Boolean   @default(false)
+  role             Role      @default(CUSTOMER)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  refreshTokens    RefreshToken[]
+  addresses        Address[]
+  orders           Order[]
+  reviews          Review[]
+  sessions         Session[]
+  auditLogs        AuditLog[]
+  carts            Cart[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id         String   @id @default(cuid())
+  token      String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  @@map("refresh_tokens")
+}
+
+enum Role {
+  GUEST
+  CUSTOMER
+  MANAGER
+  ADMIN
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        AddressType @default(HOME)
+  street      String
+  city        String
+  state       String?
+  postalCode  String
+  country     String
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("addresses")
+}
+
+enum AddressType {
+  HOME
+  WORK
+  OTHER
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@map("sessions")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String
+  entityType String
+  entityId   String
+  oldValue   Json?
+  newValue   Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt DateTime @default(now())
+  @@map("audit_logs")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  nameUk      String
+  nameRu      String
+  descriptionUk String?
+  descriptionRu String?
+  parentId    String?
+  parent      Category? @relation("CategoryParent", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryParent")
+  image       String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  products    Product[]
+  services    Service[]
+  @@map("categories")
+}
+
+model Brand {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  logo        String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  products    Product[]
+  @@map("brands")
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  type        ProductType  @default(PHYSICAL)
+  sku         String?
+  nameUk      String
+  nameRu      String
+  descriptionUk String?
+  descriptionRu String?
+  price       Int
+  oldPrice    Int?
+  quantity    Int           @default(0)
+  isAvailable Boolean       @default(true)
+  isFeatured  Boolean       @default(false)
+  isOnSale    Boolean       @default(false)
+  categoryId  String
+  category    Category      @relation(fields: [categoryId], references: [id])
+  brandId     String?
+  brand       Brand?        @relation(fields: [brandId], references: [id])
+  tags        String[]
+  specifications Json
+  images      String[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  reviews     Review[]
+  cartItems   CartItem[]
+
+  @@map("products")
+}
+
+enum ProductType {
+  PHYSICAL
+  DIGITAL
+  SERVICE
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  nameUk      String
+  nameRu      String
+  descriptionUk String
+  descriptionRu String
+  basePrice   Int
+  unit        ServiceUnit
+  categoryId  String
+  category    Category     @relation(fields: [categoryId], references: [id])
+  tags        String[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  cartItems   CartItem[]
+
+  @@map("services")
+}
+
+enum ServiceUnit {
+  PIECE
+  HOUR
+  DAY
+  PROJECT
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating      Int
+  title       String?
+  comment     String?
+  isApproved  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("reviews")
+}
+
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  items     CartItem[]
+  @@map("carts")
+}
+
+model CartItem {
+  id          String   @id @default(cuid())
+  cartId      String
+  cart        Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  serviceId   String?
+  service     Service? @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  quantity    Int      @default(1)
+  price       Int
+  createdAt   DateTime @default(now())
+  @@unique([cartId, productId])
+  @@unique([cartId, serviceId])
+  @@map("cart_items")
+}
+
+model Order {
+  id              String    @id @default(cuid())
+  orderNumber     String    @unique @default(cuid())
+  userId          String?
+  user            User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status          OrderStatus @default(PENDING)
+  total           Int
+  currency        String    @default("UAH")
+  shippingAddress Json?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  items           OrderItem[]
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String?
+  productNameUk String?
+  productNameRu String?
+  serviceId   String?
+  serviceNameUk String?
+  serviceNameRu String?
+  quantity    Int
+  price       Int
+  total       Int
+  @@map("order_items")
+}
