@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { services, serviceCategories, getServicesByCategory } from '@/data/services';
 import Header from '@/components/layout/Header';
+import ConsultationModal from '@/components/services/ConsultationModal';
 
 interface Service {
   id: string;
@@ -27,11 +28,13 @@ export default function ServicesPage() {
   const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState('all');
   const [expandedService, setExpandedService] = useState<string | null>(null);
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
+  const [selectedServiceName, setSelectedServiceName] = useState('');
 
   const allServices = services;
 
-  const displayServices = activeCategory === 'all' 
-    ? allServices 
+  const displayServices = activeCategory === 'all'
+    ? allServices
     : getServicesByCategory(activeCategory);
 
   const handleAddServiceToCart = (service: Service) => {
@@ -49,9 +52,15 @@ export default function ServicesPage() {
     });
   };
 
+  const openConsultationModal = (serviceName: string) => {
+    setSelectedServiceName(serviceName);
+    setIsConsultationModalOpen(true);
+  };
+
   return (
     <main className="min-h-screen bg-gray-50">
       <Header />
+
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-gray-800 to-blue-900 text-white py-16 mt-4">
         <div className="container mx-auto px-4 text-center">
@@ -134,7 +143,7 @@ export default function ServicesPage() {
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">{service.nameUk}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">{service.descriptionUk}</p>
-                  
+
                   <button
                     onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
                     className="flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700 transition-colors mb-3"
@@ -149,7 +158,7 @@ export default function ServicesPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  
+
                   {expandedService === service.id && (
                     <div className="mt-3 pt-4 border-t border-gray-200">
                       <h4 className="font-semibold text-gray-800 mb-3">Включено:</h4>
@@ -167,32 +176,35 @@ export default function ServicesPage() {
                         <p className="text-sm text-gray-500 mt-3 italic">{service.priceNote}</p>
                       )}
                       <div className="mt-4 flex gap-3">
-                        <button 
+                        <button
                           onClick={() => handleAddServiceToCart(service)}
                           className="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
                         >
                           🛒 Додати до кошика
                         </button>
-                        <button className="flex-1 py-2 px-4 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
-                          Консультація
+                        <button
+                          onClick={() => openConsultationModal(service.nameUk)}
+                          className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                        >
+                          💬 Консультація
                         </button>
                       </div>
                     </div>
                   )}
-                  
+
                   {expandedService !== service.id && (
                     <div className="mt-4 flex gap-3">
-                      <button 
+                      <button
                         onClick={() => handleAddServiceToCart(service)}
                         className="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
                       >
                         🛒 Додати до кошика
                       </button>
-                      <button 
-                        onClick={() => setExpandedService(service.id)}
-                        className="flex-1 py-2 px-4 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                      <button
+                        onClick={() => openConsultationModal(service.nameUk)}
+                        className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
                       >
-                        Деталі
+                        💬 Консультація
                       </button>
                     </div>
                   )}
@@ -203,6 +215,13 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Consultation Modal */}
+      <ConsultationModal
+        isOpen={isConsultationModalOpen}
+        onClose={() => setIsConsultationModalOpen(false)}
+        serviceName={selectedServiceName}
+      />
+
       {/* Pricing Section */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
@@ -212,7 +231,7 @@ export default function ServicesPage() {
           <p className="text-center text-gray-500 mb-12">
             Ціни вказані орієнтовно. Точну вартість розраховуємо індивідуально після огляду об'єкту.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
               {
@@ -240,8 +259,8 @@ export default function ServicesPage() {
               <div
                 key={i}
                 className={`bg-white rounded-2xl p-6 shadow-lg border-2 ${
-                  plan.popular 
-                    ? 'border-blue-500 ring-4 ring-blue-100' 
+                  plan.popular
+                    ? 'border-blue-500 ring-4 ring-blue-100'
                     : 'border-gray-200'
                 }`}
               >
@@ -264,6 +283,7 @@ export default function ServicesPage() {
                   ))}
                 </ul>
                 <button
+                  onClick={() => openConsultationModal(plan.title)}
                   className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
                     plan.popular
                       ? 'bg-blue-600 text-white hover:bg-blue-700'
@@ -319,18 +339,31 @@ export default function ServicesPage() {
             Потрібна консультація?
           </h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Залиште заявку і наш фахівець зв\'яжеться з вами протягом 30 хвилин
+            Залиште заявку і наш фахівець зв'яжеться з вами протягом 30 хвилин
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-            <button className="btn-primary flex-1">
+            <button
+              onClick={() => openConsultationModal('Швидка консультація')}
+              className="btn-primary flex-1"
+            >
               +38 (044) 123-45-67
             </button>
-            <button className="btn-secondary text-blue-600 border-blue-400 flex-1">
+            <button
+              onClick={() => openConsultationModal('Зворотний дзвінок')}
+              className="btn-secondary text-blue-600 border-blue-400 flex-1"
+            >
               Замовити дзвінок
             </button>
           </div>
         </div>
       </section>
+
+      {/* Consultation Modal for CTA */}
+      <ConsultationModal
+        isOpen={isConsultationModalOpen}
+        onClose={() => setIsConsultationModalOpen(false)}
+        serviceName={selectedServiceName}
+      />
     </main>
   );
 }
