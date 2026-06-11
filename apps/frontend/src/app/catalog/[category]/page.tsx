@@ -218,7 +218,8 @@ export default function CategoryPage({ params }: { params: { category: string } 
                         nameRu: product.nameRu,
                         price: product.price,
                         image: product.images[0],
-                        category: product.category.slug
+                        category: product.category.slug,
+                        type: 'product'
                       })}
                       className="flex-1 py-3 px-4 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
                     >
