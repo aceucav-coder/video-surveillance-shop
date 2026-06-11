@@ -1,4 +1,4 @@
-name: Deploy VideoShop
+name: Deploy PaxVision
 
 on:
   push:
@@ -71,7 +71,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: videoshop-build
+        name: paxvision-build
         path: |
           apps/frontend/.next/
           apps/frontend/public/

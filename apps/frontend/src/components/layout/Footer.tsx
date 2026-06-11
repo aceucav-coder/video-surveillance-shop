@@ -12,8 +12,8 @@ const FooterLogo = () => (
       <circle cx="15.5" cy="13.5" r="1.8" fill="white" opacity="0.45"/>
     </svg>
     <div className="flex items-baseline gap-1">
-      <span className="font-heading text-lg font-black text-text-light">Video</span>
-      <span className="font-heading text-lg font-light text-accent tracking-wider">Shop</span>
+      <span className="font-heading text-lg font-black text-text-light">Pax</span>
+      <span className="font-heading text-lg font-light text-accent tracking-wider">Vision</span>
     </div>
   </div>
 );
@@ -21,19 +21,19 @@ const FooterLogo = () => (
 // Social Links
 const SocialLinks = () => (
   <div className="flex gap-3">
-    <a href="https://facebook.com/videoshop" target="_blank" rel="noopener noreferrer" 
+    <a href="https://facebook.com/paxvision" target="_blank" rel="noopener noreferrer" 
        className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white hover:bg-blue-700 transition-colors">
       <span className="text-xl font-bold">f</span>
     </a>
-    <a href="https://instagram.com/videoshop" target="_blank" rel="noopener noreferrer" 
+    <a href="https://instagram.com/paxvision" target="_blank" rel="noopener noreferrer" 
        className="w-10 h-10 bg-pink-600 rounded-lg flex items-center justify-center text-white hover:bg-pink-700 transition-colors">
       <span className="text-xl">📷</span>
     </a>
-    <a href="https://t.me/videoshop" target="_blank" rel="noopener noreferrer" 
+    <a href="https://t.me/paxvision" target="_blank" rel="noopener noreferrer" 
        className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
       <span className="text-xl">✈️</span>
     </a>
-    <a href="https://viber.com/videoshop" target="_blank" rel="noopener noreferrer" 
+    <a href="https://viber.com/paxvision" target="_blank" rel="noopener noreferrer" 
        className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white hover:bg-purple-700 transition-colors">
       <span className="text-xl">💜</span>
     </a>
@@ -87,7 +87,7 @@ export const Footer: React.FC = () => {
         {/* Bottom: Copyright & Legal */}
         <div className="border-t border-border/20 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-text-muted">
-            © {new Date().getFullYear()} VideoShop. Усі права захищені.
+            © {new Date().getFullYear()} PaxVision. Усі права захищені.
           </p>
           <div className="flex gap-6 text-sm">
             <Link href="/privacy" className="text-text-muted hover:text-accent transition-colors">

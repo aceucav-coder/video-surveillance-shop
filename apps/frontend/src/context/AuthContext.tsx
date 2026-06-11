@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Load user from localStorage on mount
   useEffect(() => {
     const loadUser = () => {
-      const savedUser = localStorage.getItem('videoshop-user');
+      const savedUser = localStorage.getItem('paxvision-user');
       if (savedUser) {
         try {
           const userData = JSON.parse(savedUser);
@@ -76,9 +76,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Save user to localStorage whenever user changes
   useEffect(() => {
     if (user) {
-      localStorage.setItem('videoshop-user', JSON.stringify(user));
+      localStorage.setItem('paxvision-user', JSON.stringify(user));
     } else {
-      localStorage.removeItem('videoshop-user');
+      localStorage.removeItem('paxvision-user');
     }
   }, [user]);
 

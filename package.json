@@ -1,7 +1,7 @@
 {
   "name": "video-surveillance-shop",
   "version": "1.0.0",
-  "description": "VideoShop - Магазин відеоспостереження №1 в Україні",
+  "description": "PaxVision - Системи відеоспостереження під ключ",
   "private": true,
   "scripts": {
     "dev": "cd apps/frontend && npm run dev",

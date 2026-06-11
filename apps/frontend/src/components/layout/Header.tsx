@@ -14,8 +14,8 @@ const PaxVisionLogo = ({ className = '' }: { className?: string }) => (
       <circle cx="15.5" cy="13.5" r="2" fill="white" opacity="0.5"/>
     </svg>
     <div className="flex items-baseline gap-1">
-      <span className="font-heading text-xl font-black text-text-light -tracking-tight">Video</span>
-      <span className="font-heading text-xl font-light text-accent tracking-widest">Shop</span>
+      <span className="font-heading text-xl font-black text-text-light -tracking-tight">Pax</span>
+      <span className="font-heading text-xl font-light text-accent tracking-widest">Vision</span>
     </div>
   </div>
 );

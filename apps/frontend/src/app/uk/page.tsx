@@ -75,7 +75,7 @@ const ServicesSection = () => (
     <div className="container mx-auto px-4">
       <div className="section-header text-center">
         <span className="tag">Що ми робимо</span>
-        <h2 className="section-h2 mx-auto max-w-2xl">Послуги VideoShop</h2>
+        <h2 className="section-h2 mx-auto max-w-2xl">Послуги PaxVision</h2>
         <p className="section-sub mx-auto max-w-xl mt-2">
           Повний цикл — від проєкту до постійного обслуговування
         </p>
@@ -310,7 +310,7 @@ const ContactsSection = () => (
         <div className="card p-6 text-center">
           <div className="text-4xl mb-4 text-secondary">📧</div>
           <h3 className="font-heading text-xl font-bold text-primary mb-3">Електронна пошта</h3>
-          <p className="text-lg font-semibold text-secondary mb-2">info@videoshop.ua</p>
+          <p className="text-lg font-semibold text-secondary mb-2">info@paxvision.ua</p>
           <p className="text-sm text-text-muted">Відповідаємо протягом 24 годин</p>
         </div>
 

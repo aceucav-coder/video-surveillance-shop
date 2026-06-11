@@ -35,7 +35,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('videoshop-cart');
+    const savedCart = localStorage.getItem('paxvision-cart');
     if (savedCart) {
       setItems(JSON.parse(savedCart));
     }
@@ -43,7 +43,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Save to localStorage whenever items change
   useEffect(() => {
-    localStorage.setItem('videoshop-cart', JSON.stringify(items));
+    localStorage.setItem('paxvision-cart', JSON.stringify(items));
   }, [items]);
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {

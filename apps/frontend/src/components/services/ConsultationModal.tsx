@@ -163,7 +163,7 @@ export default function ConsultationModal({ isOpen, onClose, serviceName }: Cons
             </p>
             <div className="grid grid-cols-2 gap-3">
               <a
-                href="https://t.me/videoshop"
+                href="https://t.me/paxvision"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2 p-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors"
@@ -172,7 +172,7 @@ export default function ConsultationModal({ isOpen, onClose, serviceName }: Cons
                 <span className="text-sm">Telegram</span>
               </a>
               <a
-                href="https://viber.com/videoshop"
+                href="https://viber.com/paxvision"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-col items-center gap-2 p-4 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-colors"
