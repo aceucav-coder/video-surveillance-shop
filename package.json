@@ -1,0 +1,29 @@
+{
+  "name": "video-surveillance-shop",
+  "version": "1.0.0",
+  "description": "VideoShop - Магазин відеоспостереження №1 в Україні",
+  "private": true,
+  "scripts": {
+    "dev": "cd apps/frontend && npm run dev",
+    "build": "cd apps/frontend && npm run build",
+    "start": "cd apps/frontend && npm run start",
+    "lint": "cd apps/frontend && npm run lint"
+  },
+  "keywords": [
+    "video-surveillance",
+    "security",
+    "cctv",
+    "ip-cameras",
+    "e-commerce"
+  ],
+  "author": "aceucav-coder",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aceucav-coder/video-surveillance-shop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aceucav-coder/video-surveillance-shop/issues"
+  },
+  "homepage": "https://github.com/aceucav-coder/video-surveillance-shop#readme"
+}
