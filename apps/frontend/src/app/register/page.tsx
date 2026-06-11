@@ -228,6 +228,29 @@ export default function RegisterPage() {
                 </button>
 
                 <div className="text-center text-gray-500 text-sm">
+                  Або зареєструватися через
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    disabled={isLoading}
+                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <span className="text-xl">G</span>
+                    <span>Google</span>
+                  </button>
+                  <button
+                    type="button"
+                    disabled={isLoading}
+                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <span className="text-xl text-blue-600">f</span>
+                    <span>Facebook</span>
+                  </button>
+                </div>
+
+                <div className="text-center text-gray-500 text-sm mt-6">
                   Вже маєте обліковий запис?{' '}
                   <Link href="/login" className="text-blue-600 font-medium hover:text-blue-700">
                     Увійти

@@ -7,7 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import Header from '@/components/layout/Header';
 
 export default function LoginPage() {
-  const { login, isAuthenticated, isLoading, error } = useAuth();
+  const { login, loginWithGoogle, loginWithFacebook, isAuthenticated, isLoading, error } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +28,20 @@ export default function LoginPage() {
     }
 
     const success = await login(email, password);
+    if (success) {
+      router.push('/cabinet');
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const success = await loginWithGoogle();
+    if (success) {
+      router.push('/cabinet');
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    const success = await loginWithFacebook();
     if (success) {
       router.push('/cabinet');
     }
@@ -150,15 +164,21 @@ export default function LoginPage() {
                 <div className="flex gap-4">
                   <button
                     type="button"
-                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={handleGoogleLogin}
+                    disabled={isLoading}
+                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                   >
-                    📧 Google
+                    <span className="text-xl">G</span>
+                    <span>Google</span>
                   </button>
                   <button
                     type="button"
-                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={handleFacebookLogin}
+                    disabled={isLoading}
+                    className="flex-1 py-3 px-4 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                   >
-                    𝕏 Twitter
+                    <span className="text-xl text-blue-600">f</span>
+                    <span>Facebook</span>
                   </button>
                 </div>
               </form>

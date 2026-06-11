@@ -21,6 +21,8 @@ interface AuthContextType {
   register: (email: string, password: string, name: string, phone?: string) => Promise<boolean>;
   logout: () => void;
   updateProfile: (data: Partial<Omit<User, 'id' | 'role' | 'createdAt'>>) => Promise<boolean>;
+  loginWithGoogle: () => Promise<boolean>;
+  loginWithFacebook: () => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -108,6 +110,70 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return true;
     } catch (e) {
       setError('Сталася помилка при вході');
+      setIsLoading(false);
+      return false;
+    }
+  };
+
+  // Social login methods (simulated for demo)
+  const loginWithGoogle = async (): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Simulate Google OAuth
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Create or get user with Google
+      const email = `user_${Math.random().toString(36).substr(2, 8)}@gmail.com`;
+      const name = 'Google User';
+      
+      if (!usersDatabase[email]) {
+        usersDatabase[email] = {
+          id: hashPassword(email),
+          email,
+          name,
+          role: 'customer',
+          createdAt: new Date().toISOString()
+        };
+      }
+      
+      setUser(usersDatabase[email]);
+      setIsLoading(false);
+      return true;
+    } catch (e) {
+      setError('Не вдалося увійти через Google');
+      setIsLoading(false);
+      return false;
+    }
+  };
+
+  const loginWithFacebook = async (): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Simulate Facebook OAuth
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const email = `user_${Math.random().toString(36).substr(2, 8)}@facebook.com`;
+      const name = 'Facebook User';
+      
+      if (!usersDatabase[email]) {
+        usersDatabase[email] = {
+          id: hashPassword(email),
+          email,
+          name,
+          role: 'customer',
+          createdAt: new Date().toISOString()
+        };
+      }
+      
+      setUser(usersDatabase[email]);
+      setIsLoading(false);
+      return true;
+    } catch (e) {
+      setError('Не вдалося увійти через Facebook');
       setIsLoading(false);
       return false;
     }
@@ -223,7 +289,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     login,
     register,
     logout,
-    updateProfile
+    updateProfile,
+    loginWithGoogle,
+    loginWithFacebook
   };
 
   return (

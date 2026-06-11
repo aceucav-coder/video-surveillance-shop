@@ -1,19 +1,15 @@
 import Link from 'next/link';
-import Head from 'next/head';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function RuPage() {
   return (
     <main className="min-h-screen bg-gray-50">
-      <Head>
-        <title>VideoShop - Магазин видеонаблюдения №1 в Украине</title>
-        <meta name="description" content="IP-камеры, видеорегистраторы, аксессуары и услуги монтажа от ведущих мировых брендов" />
-      </Head>
-      
       <Header />
+      
       {/* Hero Section with Background Image */}
       <section 
-        className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white"
+        className="relative h-[70vh] min-h-[500px] flex items-center justify-center text-white"
         style={{
           backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1920&h=1080&fit=crop)',
           backgroundSize: 'cover',
@@ -23,13 +19,13 @@ export default function RuPage() {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-blue-600/60" />
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
             <span className="text-blue-300">Video</span><span className="text-white">Shop</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md">
+          <p className="text-xl md:text-2xl mb-4 max-w-3xl mx-auto drop-shadow-md">
             Магазин видеонаблюдения №1 в Украине
           </p>
-          <p className="text-lg mb-10 max-w-2xl mx-auto opacity-80">
+          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-80">
             IP-камеры, видеорегистраторы, аксессуары и профессиональный монтаж от ведущих мировых брендов
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -44,56 +40,65 @@ export default function RuPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
             Категории товаров
           </h2>
+          <p className="text-center text-gray-500 mb-12 max-w-2xl mx-auto">
+            Выберите необходимое оборудование для вашей системы видеонаблюдения
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 name: 'IP-камеры',
-                desc: 'Высокая разрешающая способность, ночной режим, купол и сферические камеры',
+                desc: 'Высокая разрешающая способность, ночной режим, купольные и сферические камеры',
                 icon: '📹',
-                color: 'from-blue-500 to-blue-700'
+                color: 'from-blue-500 to-blue-700',
+                link: '/catalog/ip-cameras'
               },
               {
                 name: 'Аналоговые камеры',
                 desc: 'Традиционные камеры с высоким качеством изображения',
                 icon: '📺',
-                color: 'from-green-500 to-green-700'
+                color: 'from-green-500 to-green-700',
+                link: '/catalog/analog-cameras'
               },
               {
                 name: 'Видеорегистраторы',
                 desc: 'NVR, DVR регистраторы для хранения видео',
                 icon: '💾',
-                color: 'from-purple-500 to-purple-700'
+                color: 'from-purple-500 to-purple-700',
+                link: '/catalog/recorders'
               },
               {
                 name: 'Кабели и питание',
                 desc: 'Кабели, блоки питания, разъемы',
                 icon: '🔌',
-                color: 'from-orange-500 to-orange-700'
+                color: 'from-orange-500 to-orange-700',
+                link: '/catalog/cables'
               },
               {
                 name: 'Крепления',
                 desc: 'Крепления для камер всех типов',
                 icon: '🔧',
-                color: 'from-red-500 to-red-700'
+                color: 'from-red-500 to-red-700',
+                link: '/catalog/mounts'
               },
               {
                 name: 'Готовые комплекты',
                 desc: 'Комплекты видеонаблюдения под ключ',
                 icon: '📦',
-                color: 'from-indigo-500 to-indigo-700'
+                color: 'from-indigo-500 to-indigo-700',
+                link: '/catalog/kits'
               },
             ].map((cat, i) => (
               <Link
                 key={i}
-                href={`/catalog/${cat.name.toLowerCase().replace(/ /g, '-')}`}
-                className={`card p-6 text-white bg-gradient-to-br ${cat.color} hover:scale-105 transition-transform`}
+                href={cat.link}
+                className={`card p-6 text-white bg-gradient-to-br ${cat.color} hover:scale-105 transition-transform group`}
               >
-                <span className="text-4xl mb-3 block">{cat.icon}</span>
+                <span className="text-4xl mb-3 block group-hover:scale-110 transition-transform">{cat.icon}</span>
                 <h3 className="text-xl font-bold mb-2">{cat.name}</h3>
                 <p className="text-sm opacity-90">{cat.desc}</p>
               </Link>
@@ -102,90 +107,98 @@ export default function RuPage() {
         </div>
       </section>
 
-      {/* Services */}
-      <section className="py-16 bg-gray-100">
+      {/* Featured Services */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
             Наши услуги
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <p className="text-center text-gray-500 mb-12 max-w-2xl mx-auto">
+            Профессиональные услуги от установки до обслуживания
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 name: 'Монтаж видеонаблюдения',
-                desc: 'Профессиональный монтаж систем видеонаблюдения любой сложности',
-                price: 'от 500 ₴/м²',
-                icon: '🔨'
+                desc: 'Профессиональный монтаж системы видеонаблюдения любой сложности',
+                price: 'от 1500 ₴/проект',
+                icon: '🔨',
+                link: '/services#installation'
               },
               {
                 name: 'Настройка оборудования',
                 desc: 'Полная настройка камер, регистраторов и сетевого оборудования',
-                price: 'от 800 ₴',
-                icon: '⚙️'
+                price: 'от 500 ₴/час',
+                icon: '⚙️',
+                link: '/services#configuration'
               },
               {
                 name: 'Техническое обслуживание',
                 desc: 'Регулярный осмотр и профилактика систем видеонаблюдения',
-                price: 'от 300 ₴/мес',
-                icon: '🔧'
+                price: 'от 300 ₴/месяц',
+                icon: '🔧',
+                link: '/services#maintenance'
               },
             ].map((service, i) => (
-              <div key={i} className="card p-6 text-center">
-                <span className="text-4xl mb-3 block">{service.icon}</span>
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{service.name}</h3>
+              <Link
+                key={i}
+                href={service.link}
+                className="card p-6 text-center hover:shadow-lg transition-shadow"
+              >
+                <span className="text-4xl mb-4 block text-blue-600">{service.icon}</span>
+                <h3 className="text-xl font-bold mb-3 text-gray-800">{service.name}</h3>
                 <p className="text-gray-600 mb-4">{service.desc}</p>
                 <p className="text-primary font-bold text-lg">{service.price}</p>
-              </div>
+                <span className="text-blue-600 text-sm font-medium mt-2 inline-block">
+                  Подробнее →
+                </span>
+              </Link>
             ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link 
+              href="/services" 
+              className="btn-secondary text-blue-600 border-blue-600 px-8 py-3"
+            >
+              Все услуги
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Partners */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Наши партнеры
-          </h2>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-            {['Hikvision', 'Dahua', 'EZVIZ', 'Uniview', 'Axis', 'Bosch'].map((brand, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-center h-16 w-40 bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
-              >
-                <span className="text-xl font-bold text-gray-700">{brand}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Info Section */}
+      {/* Why Choose Us */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
             Почему выбирают нас?
           </h2>
+          <p className="text-center text-gray-500 mb-12 max-w-2xl mx-auto">
+            Мы предлагаем полный комплекс услуг и гарантируем качество
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 title: 'Качественное оборудование',
-                desc: 'Только оригинальные товары от ведущих мировых производителей',
-                icon: '✅'
+                desc: 'Только оригинальные товары от ведущих мировых производителей с официальной гарантией',
+                icon: '✅',
+                color: 'green'
               },
               {
                 title: 'Профессиональный монтаж',
-                desc: 'Опытные специалисты с гарантией на работы',
-                icon: '✅'
+                desc: 'Опытные специалисты с гарантией на работы до 36 месяцев',
+                icon: '✅',
+                color: 'blue'
               },
               {
                 title: 'Поддержка 24/7',
-                desc: 'Техническая поддержка и сервисное обслуживание',
-                icon: '✅'
+                desc: 'Техническая поддержка и сервисное обслуживание без выходных',
+                icon: '✅',
+                color: 'purple'
               },
             ].map((item, i) => (
-              <div key={i} className="card p-6">
-                <span className="text-3xl mb-3 block text-green-600">{item.icon}</span>
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{item.title}</h3>
+              <div key={i} className="card p-6 group hover:shadow-lg transition-shadow">
+                <span className={`text-4xl mb-4 block text-${item.color}-600`}>{item.icon}</span>
+                <h3 className="text-xl font-bold mb-3 text-gray-800">{item.title}</h3>
                 <p className="text-gray-600">{item.desc}</p>
               </div>
             ))}
@@ -193,42 +206,123 @@ export default function RuPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      {/* Partners */}
+      <section id="partners" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">VideoShop</h3>
-              <p className="text-gray-400">
-                Магазин оборудования видеонаблюдения
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Каталог</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/catalog/ip-cameras" className="hover:text-white">IP-камеры</Link></li>
-                <li><Link href="/catalog/recorders" className="hover:text-white">Регистраторы</Link></li>
-                <li><Link href="/catalog/services" className="hover:text-white">Услуги</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Язык</h4>
-              <div className="space-y-2">
-                <Link href="/uk" className="block text-gray-400 hover:text-white">🇺🇦 Українська</Link>
-                <Link href="/ru" className="block text-blue-400 hover:text-white">🇷🇺 Русский</Link>
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
+            Наши партнеры
+          </h2>
+          <p className="text-center text-gray-500 mb-12 max-w-2xl mx-auto">
+            Мы сотрудничаем с ведущими мировыми брендами оборудования видеонаблюдения
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              { name: 'Hikvision', desc: 'Мировой лидер в производстве систем видеонаблюдения', logo: 'Hikvision' },
+              { name: 'Dahua', desc: 'Инновационные решения для безопасности и наблюдения', logo: 'Dahua' },
+              { name: 'EZVIZ', desc: 'Умные камеры для дома и бизнеса', logo: 'EZVIZ' },
+              { name: 'Uniview', desc: 'Профессиональное видеонаблюдение для предприятий', logo: 'Uniview' },
+              { name: 'Axis', desc: 'Премиальные решения для сетевого видео', logo: 'Axis' },
+              { name: 'Bosch', desc: 'Немецкое качество и надежность', logo: 'Bosch' },
+            ].map((brand, i) => (
+              <div
+                key={i}
+                className="card p-6 text-center hover:scale-105 transition-transform"
+              >
+                <div className="mb-4">
+                  <span className="text-2xl font-bold text-blue-600">{brand.logo}</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">{brand.name}</h3>
+                <p className="text-sm text-gray-500">{brand.desc}</p>
               </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Контакты</h4>
-              <p className="text-gray-400">+38 (044) 123-45-67</p>
-              <p className="text-gray-400">info@videoshop.ua</p>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>© 2024 VideoShop. Все права защищены.</p>
+            ))}
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Contacts */}
+      <section id="contacts" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
+            Контакты
+          </h2>
+          <p className="text-center text-gray-500 mb-12 max-w-2xl mx-auto">
+            Свяжитесь с нами для консультации и заказа
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Phone & Email */}
+            <div className="card p-6 text-center">
+              <div className="text-4xl mb-4 text-green-600">📞</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Телефон</h3>
+              <p className="text-lg font-semibold text-primary mb-2">+38 (044) 123-45-67</p>
+              <p className="text-sm text-gray-500">Пн-Пт: 9:00 - 18:00</p>
+            </div>
+            
+            {/* Email */}
+            <div className="card p-6 text-center">
+              <div className="text-4xl mb-4 text-blue-600">📧</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Электронная почта</h3>
+              <p className="text-lg font-semibold text-primary mb-2">info@videoshop.ua</p>
+              <p className="text-sm text-gray-500">Отвечаем в течение 24 часов</p>
+            </div>
+            
+            {/* Address */}
+            <div className="card p-6 text-center">
+              <div className="text-4xl mb-4 text-purple-600">📍</div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Адрес</h3>
+              <p className="text-lg font-semibold text-gray-800 mb-2">г. Киев, ул. Сечевых Стрельцов, 50</p>
+              <p className="text-sm text-gray-500">Офис и склад</p>
+            </div>
+          </div>
+          
+          {/* Social Networks */}
+          <div className="mt-12">
+            <h3 className="text-xl font-bold text-center text-gray-800 mb-6">
+              Мы в социальных сетях
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4">
+              {[
+                { name: 'Facebook', icon: 'f', color: 'bg-blue-600', link: 'https://facebook.com' },
+                { name: 'Instagram', icon: '📷', color: 'bg-pink-600', link: 'https://instagram.com' },
+                { name: 'Telegram', icon: '✈️', color: 'bg-blue-500', link: 'https://telegram.org' },
+                { name: 'Viber', icon: '💜', color: 'bg-purple-600', link: 'https://viber.com' },
+              ].map((social, i) => (
+                <a
+                  key={i}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-16 h-16 ${social.color} rounded-xl flex items-center justify-center text-white text-2xl hover:scale-110 transition-transform shadow-lg`}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Нужна консультация?
+          </h2>
+          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+            Оставьте заявку и наш специалист свяжется с вами в течение 30 минут
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/catalog" className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors">
+              Перейти в каталог
+            </Link>
+            <Link href="/services" className="bg-blue-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-400 transition-colors border-2 border-blue-400">
+              Ознакомиться с услугами
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </main>
   );
 }
