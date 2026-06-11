@@ -50,6 +50,9 @@ module.exports = {
         '88': '22rem',
         '128': '32rem',
       },
+      borderWidth: {
+        '1.5': '1.5px',
+      },
     },
   },
   plugins: [],
