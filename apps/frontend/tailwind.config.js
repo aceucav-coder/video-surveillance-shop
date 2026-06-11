@@ -51,6 +51,7 @@ module.exports = {
         '128': '32rem',
       },
       borderWidth: {
+        '0.5': '0.5px',
         '1.5': '1.5px',
       },
     },

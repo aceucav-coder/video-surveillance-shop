@@ -15,7 +15,7 @@ export const Card: React.FC<CardProps> = ({
     default: 'bg-white',
     bordered: 'bg-white border border-border',
     shadow: 'bg-white shadow-md',
-    service: 'bg-white border-0.5 border-border hover:border-secondary transition-colors duration-200',
+    service: 'bg-white border border-border/50 hover:border-secondary transition-colors duration-200',
   };
 
   return (

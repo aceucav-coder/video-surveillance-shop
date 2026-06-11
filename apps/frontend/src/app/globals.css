@@ -77,7 +77,7 @@
   }
   
   .service-card {
-    @apply bg-white rounded-lg px-6 py-7 border-0.5 border-border transition-colors duration-200 hover:border-secondary;
+    @apply bg-white rounded-lg px-6 py-7 border border-border/50 transition-colors duration-200 hover:border-secondary;
   }
   
   .section-title {
