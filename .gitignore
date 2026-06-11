@@ -2,20 +2,56 @@
 node_modules/
 .pnp/
 .yarn/
+.pnpm-store/
 
 # Next.js
 .next/
 out/
 build/
 dist/
+.cache/
 
 # Environment
 .env*
+.env.local
+.env.development
+.env.test
+.env.production
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # IDE
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Docker
 docker-compose.override.yml
+
+# Frontend
+apps/frontend/.next/
+apps/frontend/next-env.d.ts
+
+# Backend
+apps/backend/node_modules/
+apps/backend/dist/
+apps/backend/.env
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+coverage/
+
+# Temporary files
+tmp/
+temp/

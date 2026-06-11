@@ -1,0 +1,78 @@
+name: Deploy VideoShop
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [20]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    # Install frontend dependencies
+    - name: Install Frontend Dependencies
+      run: |
+        cd apps/frontend
+        npm ci
+    
+    # Build frontend
+    - name: Build Frontend
+      run: |
+        cd apps/frontend
+        npm run build
+    
+    # Install backend dependencies
+    - name: Install Backend Dependencies
+      run: |
+        cd apps/backend
+        npm ci
+    
+    # Run tests (if any)
+    - name: Run Tests
+      run: |
+        cd apps/frontend
+        npm test --if-present || true
+    
+    # Deploy to Vercel (example)
+    # Uncomment and configure with your Vercel token
+    # - name: Deploy to Vercel
+    #   uses: amondnet/vercel-action@v25
+    #   with:
+    #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+    #     vercel-args: '--prod'
+    #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+    #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+    
+    # Or deploy to Netlify
+    # - name: Deploy to Netlify
+    #   uses: nwtgck/actions-netlify@v2
+    #   with:
+    #     publish-dir: './apps/frontend/out'
+    #     production-branch: main
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     deploy-message: "Deploy from GitHub Actions"
+    #     enable-pull-request-comment: false
+    #     enable-commit-comment: true
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: videoshop-build
+        path: |
+          apps/frontend/.next/
+          apps/frontend/public/
+          apps/frontend/package.json
